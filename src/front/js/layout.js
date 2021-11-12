@@ -1,10 +1,13 @@
-import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import React, { useContext } from "react";
+import { Context } from "./store/appContext";
 import ScrollToTop from "./component/scrollToTop";
 
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
+import { GetUser } from "./pages/getuser";
+import { Private } from "./pages/private";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -16,6 +19,7 @@ const Layout = () => {
 	// you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
 	const basename = process.env.BASENAME || "";
 
+	const { store } = useContext(Context);
 	return (
 		<div>
 			<BrowserRouter basename={basename}>
@@ -24,6 +28,15 @@ const Layout = () => {
 					<Switch>
 						<Route exact path="/">
 							<Home />
+						</Route>
+						<Route exact path="/signup">
+							{store.token == "" ? <GetUser newUser={true} /> : <Redirect from="/login" to="/" />}
+						</Route>
+						<Route exact path="/login">
+							{store.token == "" ? <GetUser newUser={false} /> : <Redirect from="/login" to="/" />}
+						</Route>
+						<Route exact path="/private">
+							{store.token == "" ? <Redirect from="/private" to="/" /> : <Private />}
 						</Route>
 						<Route exact path="/demo">
 							<Demo />
