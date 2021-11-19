@@ -3,7 +3,7 @@ import { Context } from "../store/appContext";
 import "../../styles/home.scss";
 
 export const Private = () => {
-	const { store, actions } = useContext(Context);
+	const { store } = useContext(Context);
 	const [myemail, setMyemail] = useState("");
 
 	fetch(process.env.BACKEND_URL + "/protected", {

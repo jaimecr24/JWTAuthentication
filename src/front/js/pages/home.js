@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.scss";
-import { FormUser } from "../component/formuser";
+import { FormLogin } from "../component/formlogin";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
@@ -11,10 +11,10 @@ export const Home = () => {
 			<div className="container my-5" style={{ height: "50vh" }}>
 				<div className="row h-100 d-flex align-items-center">
 					<div className="col-6 text-primary" style={{ fontSize: "70px" }}>
-						Photo album
+						Bla Bla Bla
 					</div>
 					<div className="col-5 h-75 p-3 d-flex flex-column align-items-center justify-content-center shadow rounded">
-						<FormUser />
+						<FormLogin />
 					</div>
 				</div>
 			</div>
