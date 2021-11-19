@@ -1,17 +1,24 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.scss";
+import { FormUser } from "../component/formuser";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
 		<div className="text-center mt-5">
-			<h1>Hello Rigo!</h1>
-			<p>
-				<img src={rigoImageUrl} />
-			</p>
+			<div className="container my-5" style={{ height: "50vh" }}>
+				<div className="row h-100 d-flex align-items-center">
+					<div className="col-6 text-primary" style={{ fontSize: "70px" }}>
+						Photo album
+					</div>
+					<div className="col-5 h-75 p-3 d-flex flex-column align-items-center justify-content-center shadow rounded">
+						<FormUser />
+					</div>
+				</div>
+			</div>
+
 			<div className="alert alert-info">{store.message || "Loading message from the backend..."}</div>
 			<p>
 				This boilerplate comes with lots of documentation:{" "}

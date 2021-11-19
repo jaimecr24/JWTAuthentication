@@ -4,9 +4,6 @@ import { Context } from "./store/appContext";
 import ScrollToTop from "./component/scrollToTop";
 
 import { Home } from "./pages/home";
-import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
-import { GetUser } from "./pages/getuser";
 import { Private } from "./pages/private";
 import injectContext from "./store/appContext";
 
@@ -24,25 +21,13 @@ const Layout = () => {
 		<div>
 			<BrowserRouter basename={basename}>
 				<ScrollToTop>
-					<Navbar />
+					{store.activUser ? <Navbar /> : ""}
 					<Switch>
 						<Route exact path="/">
-							<Home />
-						</Route>
-						<Route exact path="/signup">
-							{store.token == "" ? <GetUser newUser={true} /> : <Redirect from="/login" to="/" />}
-						</Route>
-						<Route exact path="/login">
-							{store.token == "" ? <GetUser newUser={false} /> : <Redirect from="/login" to="/" />}
+							{store.activUser ? <Redirect from="/" to="/private" /> : <Home />}
 						</Route>
 						<Route exact path="/private">
-							{store.token == "" ? <Redirect from="/private" to="/" /> : <Private />}
-						</Route>
-						<Route exact path="/demo">
-							<Demo />
-						</Route>
-						<Route exact path="/single/:theid">
-							<Single />
+							{store.activUser ? <Private /> : <Redirect from="/private" to="/" />}
 						</Route>
 						<Route>
 							<h1>Not found!</h1>

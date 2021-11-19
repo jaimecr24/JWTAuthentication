@@ -71,12 +71,17 @@ def create_token():
     # Query your database for username and password
     user = User.query.filter_by(email=email, password=password).first()
     if user is None:
-        # the user was not found on the database
-        return jsonify({"msg": "Bad email or password"}), 401
+        user = User.query.filter_by(email=email).first()
+        if user is None:
+            # the user was not found on the database
+            return jsonify({"error": "email not exists"}), 401
+        else:
+            # bad password
+            return jsonify({"error": "bad password"}), 401
     
     # create a new token with the user id inside
     access_token = create_access_token(identity=user.id)
-    return jsonify({ "token": access_token, "user_id": user.id })
+    return jsonify({ "token": access_token, "user_id": user.id }), 200
 
 # Protect a route with jwt_required, which will kick out requests
 # without a valid JWT present.
@@ -98,9 +103,9 @@ def signup():
         user = User(email=email, password=password,is_active=False)
         db.session.add(user)
         db.session.commit()
-        return jsonify({"email":user.email, "password":user.password})
+        return jsonify({"email":user.email, "password":user.password}), 200
     else:
-        return jsonify({"error":"user already exists"})
+        return jsonify({"error":"user already exists"}), 400
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':

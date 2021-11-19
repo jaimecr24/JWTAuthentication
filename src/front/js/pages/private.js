@@ -21,7 +21,8 @@ export const Private = () => {
 
 	return (
 		<div className="container mt-5">
-			<h1>{myemail}</h1>
+			<h1>{`Welcome ${myemail}`}</h1>
+			<h2>This is your private area</h2>
 		</div>
 	);
 };

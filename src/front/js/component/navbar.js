@@ -11,35 +11,17 @@ export const Navbar = () => {
 				<Link to="/">
 					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
 				</Link>
-				{store.token == "" ? (
-					<>
-						<Link to="/login">
-							<span className="navbar-brand mb-0 h1">Login</span>
-						</Link>
-						<Link to="/signup">
-							<span className="navbar-brand mb-0 h1">Sign Up</span>
-						</Link>
-					</>
+				{store.token !== "" ? (
+					<button
+						onClick={() => {
+							actions.setToken("");
+							actions.setActivUser(null);
+						}}>
+						Logout
+					</button>
 				) : (
-					<>
-						<button
-							onClick={() => {
-								actions.setToken("");
-								actions.setActivUser(null);
-								actions.setSignedUp(false);
-							}}>
-							Logout
-						</button>
-						<Link to="/private">
-							<span className="navbar-brand mb-0 h1">Private</span>
-						</Link>
-					</>
+					""
 				)}
-				<div className="ml-auto">
-					<Link to="/demo">
-						<button className="btn btn-primary">Check the Context in action</button>
-					</Link>
-				</div>
 			</div>
 		</nav>
 	);

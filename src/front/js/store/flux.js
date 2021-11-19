@@ -15,15 +15,42 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 			token: "",
-			activUser: null,
-			signedUp: false
+			activUser: null
 		},
 		actions: {
-			setSignedUp: b => setStore({ signedUp: b }),
-
 			setActivUser: id => setStore({ activUser: id }),
 
 			setToken: tk => setStore({ token: tk }),
+
+			addUser: (email, password) => {
+				fetch(process.env.BACKEND_URL + "/signup", {
+					method: "POST",
+					body: JSON.stringify({ email: email, password: password }),
+					headers: {
+						"Content-Type": "application/json"
+					}
+				})
+					.then(res => res.json())
+					.then(res => ("error" in res ? alert(res["error"]) : alert("user signed ok")))
+					.catch(error => console.log(error));
+			},
+
+			login: (email, password) => {
+				// Llamada a /login para obtener el token
+				fetch(process.env.BACKEND_URL + "/login", {
+					method: "POST",
+					body: JSON.stringify({ email: email, password: password }),
+					headers: {
+						"Content-Type": "application/json"
+					}
+				})
+					.then(res => res.json())
+					.then(res => {
+						"error" in res ? alert(res["error"]) : alert("user logged ok");
+						if (res.token) setStore({ token: res.token, activUser: res.user_id });
+					})
+					.catch(error => console.error("Error: ", error));
+			},
 
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
